@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <header>
+    </header>
+    <top-nav>
+      <a href="/login">Odjava</a>
+      <a href="/pocetna">Stanje</a>
+      <a href="#">Unesi novog korisnika</a>
+    </nav>
+    <main>
+      <br>
+      <br>
+      <p>{{ filament.proizvođač }}</p>
+      <p>{{ filament.boja }}</p>
+      <p>{{ filament.materijal }}</p>
+      <p>{{ filament.promjer }}</p>
+      <p>{{ filament.masa }}</p>
+      <p>{{ filament.datum_vrijeme_upisa }}</p>
+      <p>Moji e-kolegiji</p>
+      
+    </main>
+    <footer>
+      <a href="https://www.tvz.hr/"> Stranica TVZ-a </a>
+    </footer>
+  </body>
+</html>
+

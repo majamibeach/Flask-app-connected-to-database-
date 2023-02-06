@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"  />
+  </head>
+  <body>
+    <form action="/new-filament" method="post"><br>
+    <label for="proizvodjac">Proizvođač:</label><br>
+      <input type="text" placeholder="Unesi proizvođača" name="proizvodjac"/><br>
+      <label for="boja">Boja:</label><br>
+      <input type="text" placeholder="Unesi boju" name="boja"/><br>
+      <label for="materijal">Materijal:</label><br>
+      <input type="text" placeholder="Unesi materijal" name="materijal"/><br>
+      <label for="promjer">Promjer:</label><br>
+      <input type="text" placeholder="Unesi promjer" name="promjer"/><br>
+      {% if error %}
+        <p class="error-message">{{error}}</p>
+      {% endif %}
+      <button>Unesi</button>
+    </form>
+  </body>
+</html>
