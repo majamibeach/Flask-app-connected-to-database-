@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -22,14 +22,24 @@ def login():
         password = request.form.get('password')
 
         # ADD uvijete koji actually provjeravaju db
+        #query = f"SELECT email, password FROM korisnik"
+        #cursor = mysql.connection.cursor()
+        #cursor.execute(query)
+        #korisnik = cursor.fetchall()
+        #print(korisnik)
+        #result = [i[0] for i in korisnik]
+        #print (result)
+        #print (result [0])
+        #print (result [1])
+        #print (result [2])
+
+        #for i in result:
         if email == 'test@gmail.com' and password == 'test':
             session['username'] = 'test'
             return redirect(url_for('pocetna')), 303
-        
         elif email == 'admin@gmail.com' and password == 'admin':
             session['username'] = 'admin'
             return redirect(url_for('pocetna_admin')), 303
-        
         else:
             return render_template('login.html', error='Uneseni su krivi korisnički podaci')
 
@@ -41,15 +51,15 @@ def pocetna():
     if 'username' in session:
 
         #db
-        query = f"SELECT * FROM filament"
-        cursor = mysql.connection.cursor()
-        cursor.execute(query)
-        filament = cursor.fetchall()
-        print(filament)
+        #query = f"SELECT * FROM filament"
+        #cursor = mysql.connection.cursor()
+        #cursor.execute(query)
+        #filament = cursor.fetchall()
+        #print(filament)
         #return f'Filamenti: {filament}', 200
         #db
-        return render_template('index.html', filament=filament)
-
+        #return render_template('index.html', filament=filament)
+        return render_template('index.html')
     return redirect(url_for('login')), 303
 
 @app.route('/admin', methods=['GET'])
