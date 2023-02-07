@@ -21,6 +21,7 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        # ADD uvijete koji actually provjeravaju db
         if email == 'test@gmail.com' and password == 'test':
             session['username'] = 'test'
             return redirect(url_for('pocetna')), 303
