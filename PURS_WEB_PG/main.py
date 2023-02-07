@@ -22,16 +22,26 @@ def login():
         password = request.form.get('password')
 
         # ADD uvijete koji actually provjeravaju db
-        if email == 'test@gmail.com' and password == 'test':
-            session['username'] = 'test'
-            return redirect(url_for('pocetna')), 303
-        
-        elif email == 'admin@gmail.com' and password == 'admin':
-            session['username'] = 'admin'
-            return redirect(url_for('pocetna_admin')), 303
-        
-        else:
-            return render_template('login.html', error='Uneseni su krivi korisnički podaci')
+        query = f"SELECT email, password FROM korisnik"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        korisnik = cursor.fetchall()
+        print(korisnik)
+        result = [i[0] for i in korisnik]
+        print (result)
+        print (result [0])
+        print (result [1])
+        print (result [2])
+
+        for i in result:
+            if email == 'test@gmail.com' and password == 'test':
+                session['username'] = 'test'
+                return redirect(url_for('pocetna')), 303
+            elif email == 'admin@gmail.com' and password == 'admin':
+                session['username'] = 'admin'
+                return redirect(url_for('pocetna_admin')), 303
+            else:
+                return render_template('login.html', error='Uneseni su krivi korisnički podaci')
 
 
 @app.route('/', methods=['GET'])
