@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"  />
   </head>
   <body>
-    <form action="/login" method="post">
-      <img src="static/images/logo.svg" class="logo" />
+    <br><br>
+    <form action="/login" method="POST">
       <input type="email" placeholder="Email address" name="email"/>
       <input type="password" placeholder="Password" name="password"/>
       {% if error %}
