@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
+from hashlib import sha256
 
 app = Flask(__name__)
 app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
@@ -20,19 +21,26 @@ def login():
     elif request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-
+        hexpass = sha256(password.encode()).hexdigest()
+        print(hexpass)
         # ADD uvijete koji actually provjeravaju db
-        if email == 'test@gmail.com' and password == 'test':
-            session['username'] = 'test'
-            return redirect(url_for('pocetna')), 303
-        
-        elif email == 'admin@gmail.com' and password == 'admin':
-            session['username'] = 'admin'
-            return redirect(url_for('pocetna_admin')), 303
-        
-        else:
-            return render_template('login.html', error='Uneseni su krivi korisnički podaci')
-
+        query = f"SELECT email, HEX(password), titula FROM korisnik"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        korisnik = cursor.fetchall()
+        print(korisnik[0][0])
+        print(korisnik[0][1])
+        print(korisnik[0][2])
+        i = 0
+        while korisnik[i]:
+                if ((email == korisnik[i][0]) and (password == korisnik[i][1])):
+                    if korisnik[i][2] == "admin":
+                        return redirect(url_for('pocetna_admin')), 303
+                    elif korisnik[i][2] == "user":
+                        return redirect(url_for('pocetna')), 303
+                    i = i + 1
+                else:
+                    return render_template('login.html', error='Uneseni su krivi korisnički podaci')
 
 @app.route('/', methods=['GET'])
 def pocetna():
