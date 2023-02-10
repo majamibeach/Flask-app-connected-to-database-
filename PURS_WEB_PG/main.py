@@ -30,7 +30,7 @@ def login():
         korisnik = cursor.fetchall()
         print(korisnik)
         
-        if korisnik[0][0]:
+        if korisnik:
             session['titula'] = korisnik[0][0]
             print(korisnik[0][0])
             if (korisnik[0][0] == "admin"):
@@ -49,15 +49,17 @@ def pocetna():
     if 'titula' in session:
 
         #db
-        #query = f"SELECT * FROM filament"
-        #cursor = mysql.connection.cursor()
-        #cursor.execute(query)
-        #filament = cursor.fetchall()
-        #print(filament)
+        headings = ("Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+
+        query = f"SELECT * FROM filament"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        filament = cursor.fetchall()
+        print(filament)
         #return f'Filamenti: {filament}', 200
         #db
-        #return render_template('index.html', filament=filament)
-        return render_template('index.html')
+        return render_template('index.html', headings=headings, filament=filament)
+        #return render_template('index.html')
     return redirect(url_for('login')), 303
 
 @app.route('/admin', methods=['GET'])
@@ -104,8 +106,11 @@ def new_filament():
         boja = request.form.get('boja')
         materijal = request.form.get('materijal')
         promjer = request.form.get('promjer')
-        masa = request.form.get('masa')
-        datum = request.form.get('datum')
+
+        query = f"INSERT INTO filament(proizvođač, boja, materijal, promjer, datum_vrijeme_upisa) VALUES ('{proizvodjac}','{boja}','{materijal}','{promjer}', NOW())"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        mysql.connection.commit()
         
     # Provjera da li mail postoji, ako ne, dozvoli stvaranje
     # novog korisnika

@@ -16,9 +16,23 @@
       <a href="/login">Odjava</a>
     </div>
   </div>
-    <h1>Početna stranica za USERA</h1>
-    <h2>Nakon povezivanja sa db tu ce biti tablica</h2>
+  
+  <table>
+    <tr>
+      {% for header in headings%}
+      <th>{{header}}</th>
+      {%endfor%}
+    </tr>
+    {%for row in filament%}
+    <tr>
+      {%for cell in row%}
+      <td>{{cell}}</td>
+      {%endfor%}
+    </tr>
+    {%endfor%}
 
-    
+  </table>
+
+
 </body>
 </html>
