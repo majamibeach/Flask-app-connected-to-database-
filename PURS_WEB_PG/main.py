@@ -17,6 +17,9 @@ mysql = MySQL(app)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        # Izbacivanje iz sessiona nakon gašenja stranice/logout-a
+        for key in list(session.keys()):
+            session.pop(key)
         return render_template('login.html')
     elif request.method == 'POST':
         email = request.form.get('email')
@@ -30,7 +33,7 @@ def login():
         korisnik = cursor.fetchall()
         print(korisnik)
         
-        if korisnik[0][0]:
+        if korisnik:
             session['titula'] = korisnik[0][0]
             print(korisnik[0][0])
             if (korisnik[0][0] == "admin"):
@@ -49,15 +52,16 @@ def pocetna():
     if 'titula' in session:
 
         #db
-        #query = f"SELECT * FROM filament"
-        #cursor = mysql.connection.cursor()
-        #cursor.execute(query)
-        #filament = cursor.fetchall()
-        #print(filament)
-        #return f'Filamenti: {filament}', 200
+        headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+
+        query = f"SELECT * FROM filament"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        filament = cursor.fetchall()
+        print(filament)
         #db
-        #return render_template('index.html', filament=filament)
-        return render_template('index.html')
+        return render_template('index.html', headings=headings, filament=filament)
+        
     return redirect(url_for('login')), 303
 
 @app.route('/admin', methods=['GET'])
@@ -65,8 +69,17 @@ def pocetna_admin():
     print(session)
 
     if 'titula' in session:
-        return render_template('pocetna_admin.html')
+        #db
+        headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
 
+        query = f"SELECT * FROM filament"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        filament = cursor.fetchall()
+        print(filament)
+        #db
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+        
     return redirect(url_for('login')), 303
 
 @app.route('/new-user', methods=['GET','POST'])
@@ -104,8 +117,11 @@ def new_filament():
         boja = request.form.get('boja')
         materijal = request.form.get('materijal')
         promjer = request.form.get('promjer')
-        masa = request.form.get('masa')
-        datum = request.form.get('datum')
+
+        query = f"INSERT INTO filament(proizvođač, boja, materijal, promjer, datum_vrijeme_upisa) VALUES ('{proizvodjac}','{boja}','{materijal}','{promjer}', NOW())"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        mysql.connection.commit()
         
     # Provjera da li mail postoji, ako ne, dozvoli stvaranje
     # novog korisnika
