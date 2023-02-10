@@ -30,7 +30,7 @@ def login():
         korisnik = cursor.fetchall()
         print(korisnik)
         
-        if korisnik[0][0]:
+        if korisnik:
             session['titula'] = korisnik[0][0]
             print(korisnik[0][0])
             if (korisnik[0][0] == "admin"):
@@ -56,7 +56,7 @@ def pocetna():
         print(filament)
         #return f'Filamenti: {filament}', 200
         #db
-        #return render_template('index.html', filament=filament)
+        return render_template('index.html', filament=filament)
         #return render_template('index.html')
     return redirect(url_for('login')), 303
 
