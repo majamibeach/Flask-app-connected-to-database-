@@ -49,6 +49,8 @@ def pocetna():
     if 'titula' in session:
 
         #db
+        headings = ("Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)

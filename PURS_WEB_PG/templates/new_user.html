@@ -4,7 +4,7 @@
     <meta charset="UTF-8-BOM" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Unos novog korisnika</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"  />
   </head>
   
@@ -21,8 +21,8 @@
     <form action="/new-user" method="post">
       <img src="static/images/FMS-logo.png" class="logo" />
       
-      <input type="email" placeholder="Email address" name="email"/>
-      <input type="password" placeholder="Password" name="password"/>
+      <input type="email" placeholder="Email adresa" name="email"/>
+      <input type="password" placeholder="Lozinka" name="password"/>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}
