@@ -8,7 +8,7 @@ app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
 #db
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'markopurs'
 app.config['MYSQL_DB'] = 'query1'
 mysql = MySQL(app)
 #db
@@ -78,15 +78,12 @@ def new_user():
     elif request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        #db
-        stringfirst = "INSERT INTO korisnik(email, password, titula) VALUES('"
-        stringmidd = "', UNHEX(SHA2('"
-        stringlast = "', 256)), 'user')"
-        query = f'{stringfirst} {email} {stringmidd} {password} {stringlast}'
+
+        query = f"INSERT INTO korisnik(email, password, titula) VALUES ('{email}',UNHEX(SHA2('{password}', 256)) , 'user')"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         mysql.connection.commit()
-        mysql.connection.close()
+
         #db
     # Provjera da li mail postoji, ako ne, dozvoli stvaranje
     # novog korisnika
