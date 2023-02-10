@@ -1,0 +1,4 @@
+- dodati flash porukie kad se uspješno doda filament ili user
+- dodati si komentare na teže dijelove koda
+- add kljajića na git
+- /new-filament css primjeni

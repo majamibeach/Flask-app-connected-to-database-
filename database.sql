@@ -29,9 +29,11 @@ INSERT INTO filament(proizvođač, boja, materijal, promjer, masa, datum_vrijeme
 ('ESUN', 'žuta', 'ABS', 1.75, 250, NOW());
 
 INSERT INTO korisnik(email, password, titula) VALUES
-('marko.tesija@gmail.com', UNHEX(SHA2('marko', 256)), 'admin'),
-('maja.benkovic@gmail.com', UNHEX(SHA2('maja', 256)), 'user'),
-('marko.kljajic@gmial.com', UNHEX(SHA2('kljaja', 256)), 'user');
+('admin@gmail.com', UNHEX(SHA2('admin', 256)), 'admin'),
+('marko@gmail.com', UNHEX(SHA2('marko', 256)), 'user');
 
 
+SELECT email,HEX(password) from korisnik;
+SELECT password from korisnik;
 SELECT * from korisnik;
+SELECT titula FROM korisnik WHERE email = 'marko@gmail.com' AND password = HEX(password) = UNHEX(SHA2('marko', 256));

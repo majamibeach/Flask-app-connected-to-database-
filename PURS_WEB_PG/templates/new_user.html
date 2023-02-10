@@ -6,16 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"  />
+    <style>
+      body {
+          margin: 0;
+          font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        .topnav {
+          overflow: hidden;
+          background-color:rgba(89, 80, 77);
+        }
+        
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+        
+        .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+        
+        .topnav a.active {
+          background-color: rgb(81,159,164);
+          color: white;
+        }
+        .topnav-right {
+          float: right;
+        }
+  </style>
+
+  <div class="topnav">
+    <a class="active" href="/admin">Stanje</a>
+    <a href="/new-user">Unos novog korisnika</a>
+    <a href="/new-filament">Unos novog filamenta</a>
+    <div class="topnav-right">
+      <a href="/login">Odjava</a>
+    </div>
+  </div>
+  
   </head>
   <body>
     <form action="/new-user" method="post">
-      <img src="static/images/logo.svg" class="logo" />
+      <img src="static/images/FMS-logo.png" class="logo" />
+      
       <input type="email" placeholder="Email address" name="email"/>
       <input type="password" placeholder="Password" name="password"/>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}
       <button>Potvrdi</button>
+      
     </form>
   </body>
 </html>
