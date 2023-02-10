@@ -8,7 +8,7 @@ app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
 #db
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'markopurs'
+app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'query1'
 mysql = MySQL(app)
 #db
@@ -49,6 +49,8 @@ def pocetna():
     if 'titula' in session:
 
         #db
+        headings = ("Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
@@ -56,7 +58,7 @@ def pocetna():
         print(filament)
         #return f'Filamenti: {filament}', 200
         #db
-        return render_template('index.html', filament=filament)
+        #return render_template('index.html', filament=filament)
         #return render_template('index.html')
     return redirect(url_for('login')), 303
 

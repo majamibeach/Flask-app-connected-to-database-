@@ -3,3 +3,5 @@
 - add kljajića na git
 - (DONE) /new-filament css primjeni
 - display tablice - update - filter
+- flashanje error poruka za krivi unos emaila,...
+- is
