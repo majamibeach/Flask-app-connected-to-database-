@@ -8,7 +8,7 @@ app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
 #db
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'markopurs'
+app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'query1'
 mysql = MySQL(app)
 #db
