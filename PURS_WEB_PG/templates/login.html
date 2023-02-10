@@ -10,12 +10,13 @@
   <body>
     <br><br>
     <form action="/login" method="POST">
-      <input type="email" placeholder="Email address" name="email"/>
-      <input type="password" placeholder="Password" name="password"/>
+      <img src="static/images/FMS-logo.png" class="logo" />
+      <input type="email" placeholder="Email adresa" name="email"/>
+      <input type="password" placeholder="Lozinka" name="password"/>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}
-      <button>Log in</button>
+      <button>Prijava</button>
     </form>
   </body>
 </html>

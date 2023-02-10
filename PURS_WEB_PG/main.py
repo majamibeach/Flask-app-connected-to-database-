@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
 from hashlib import sha256
 
@@ -24,47 +24,47 @@ def login():
         hexpass = sha256(password.encode()).hexdigest()
         print(hexpass)
         # ADD uvijete koji actually provjeravaju db
-        query = f"SELECT email, HEX(password), titula FROM korisnik"
+        query = f"SELECT titula FROM korisnik WHERE email = '{email}' AND password = HEX(password) = '{password}'"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         korisnik = cursor.fetchall()
-        print(korisnik[0][0])
-        print(korisnik[0][1])
-        print(korisnik[0][2])
-        i = 0
-        while korisnik[i]:
-                if ((email == korisnik[i][0]) and (password == korisnik[i][1])):
-                    if korisnik[i][2] == "admin":
-                        return redirect(url_for('pocetna_admin')), 303
-                    elif korisnik[i][2] == "user":
-                        return redirect(url_for('pocetna')), 303
-                    i = i + 1
-                else:
-                    return render_template('login.html', error='Uneseni su krivi korisnički podaci')
+        print(korisnik)
+        
+        if korisnik[0][0]:
+            session['titula'] = korisnik[0][0]
+            print(korisnik[0][0])
+            if (korisnik[0][0] == "admin"):
+                print("U admin if")
+                return redirect(url_for('pocetna_admin')), 303
+            elif (korisnik[0][0] == "user"):
+                print("U user if")
+                return redirect(url_for('pocetna')), 303
+        else:
+            return render_template('login.html', error='Uneseni su krivi korisnički podaci')
 
 @app.route('/', methods=['GET'])
 def pocetna():
-    print(session)
+    #print(session)
 
-    if 'username' in session:
+    if 'titula' in session:
 
         #db
-        query = f"SELECT * FROM filament"
-        cursor = mysql.connection.cursor()
-        cursor.execute(query)
-        filament = cursor.fetchall()
-        print(filament)
+        #query = f"SELECT * FROM filament"
+        #cursor = mysql.connection.cursor()
+        #cursor.execute(query)
+        #filament = cursor.fetchall()
+        #print(filament)
         #return f'Filamenti: {filament}', 200
         #db
-        return render_template('index.html', filament=filament)
-
+        #return render_template('index.html', filament=filament)
+        return render_template('index.html')
     return redirect(url_for('login')), 303
 
 @app.route('/admin', methods=['GET'])
 def pocetna_admin():
     print(session)
 
-    if 'username' in session:
+    if 'titula' in session:
         return render_template('pocetna_admin.html')
 
     return redirect(url_for('login')), 303

@@ -1,0 +1,3 @@
+- dodati flash porukice kad se uspješno doda filament ili user
+- dodati si komentare na teže dijelove koda
+- add kljajića na git
