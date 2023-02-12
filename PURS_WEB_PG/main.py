@@ -34,6 +34,7 @@ def login():
         print(korisnik)
         
         if korisnik:
+        if korisnik:
             session['titula'] = korisnik[0][0]
             print(korisnik[0][0])
             if (korisnik[0][0] == "admin"):
@@ -52,6 +53,8 @@ def pocetna():
     if 'titula' in session:
 
         #db
+        headings = ("Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+
         headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
 
         query = f"SELECT * FROM filament"
