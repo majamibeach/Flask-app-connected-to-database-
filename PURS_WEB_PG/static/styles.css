@@ -134,6 +134,16 @@ div.topnav-right {
     color: #ffffff;
     text-align: center;
 }
+.styled-table thead tr th a {
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.styled-table thead tr th a:hover {
+    color: rgba(89, 80, 77);
+}
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;

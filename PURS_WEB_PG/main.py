@@ -50,10 +50,8 @@ def pocetna():
     #print(session)
 
     if 'titula' in session:
-
         #db
         headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
-
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
@@ -71,7 +69,6 @@ def pocetna_admin():
     if 'titula' in session:
         #db
         headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
-
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
@@ -129,6 +126,110 @@ def new_filament():
         return redirect(url_for('pocetna_admin')), 303
 
     return redirect(url_for('new_filament.html')), 303
+
+# Dodavanje ruta za sortiranje tablice:
+@app.route('/sortby-ID', methods=['GET'])
+def sortby_id():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY id"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+    print(filament)
+
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+    
+    return render_template('index.html', headings=headings, filament=filament)
+    
+
+@app.route('/sortby-proizvodac', methods=['GET'])
+def sortby_proizvodac():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY proizvođač"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+    print(filament)
+  
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+    
+    return render_template('index.html', headings=headings, filament=filament)
+    
+@app.route('/sortby-boja', methods=['GET'])
+def sortby_boja():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY boja"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+
+    return render_template('index.html', headings=headings, filament=filament)
+    
+
+@app.route('/sortby-materijal', methods=['GET'])
+def sortby_materijal():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY materijal"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+
+    return render_template('index.html', headings=headings, filament=filament)
+    
+@app.route('/sortby-promjer', methods=['GET'])
+def sortby_promjer():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY promjer"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+
+    return render_template('index.html', headings=headings, filament=filament)
+    
+@app.route('/sortby-masa', methods=['GET'])
+def sortby_masa():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY masa"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+
+    return render_template('index.html', headings=headings, filament=filament)
+    
+@app.route('/sortby-datum', methods=['GET'])
+def sortby_datum():
+
+    headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+    query = f"SELECT * FROM filament ORDER BY datum_vrijeme_upisa"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    filament = cursor.fetchall()
+
+    if (session['titula'] == "admin"):
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+
+    return render_template('index.html', headings=headings, filament=filament)
+    
 
 if __name__ == '__main__':
     app.run()
