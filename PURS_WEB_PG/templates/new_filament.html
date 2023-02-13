@@ -27,7 +27,7 @@
       <input type="text" placeholder="Unesi materijal" name="materijal" required/><br>
       <label for="promjer">Promjer:</label><br>
       <input type="number" placeholder="Unesi promjer" name="promjer" step="0.01" min="0.1" max="9.99"
-      title="Lozinka mora sadržavati po barem jedno veliko i malo slovo, te mora imati najmanje 6 znakova"/><br>
+      title="Lozinka mora sadržavati po barem jedno veliko i malo slovo, te mora imati najmanje 6 znakova" required/><br>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}
