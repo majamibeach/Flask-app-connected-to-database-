@@ -18,16 +18,19 @@
       </div>
     </div>
 
-    <form action="/new-user" method="post">
-      <img src="static/images/FMS-logo.png" class="logo" />
-      
+    <form action="/new-user" method="post" class="unk_obrazac">
+      <p>Unos novog korisnika</p>
+      <label for="email">Email adresa:</label>
       <input type="email" placeholder="Email adresa" name="email"/>
+      <label for="password">Lozinka:</label>
       <input type="password" placeholder="Lozinka" name="password"/>
+      <label for="password2">Potvrdi lozinku:</label>
+      <input type="password" placeholder="Potvrdi lozinku" name="password2"/>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}
       <button>Potvrdi</button>
-      
+      <br><br>
     </form>
   </body>
 </html>

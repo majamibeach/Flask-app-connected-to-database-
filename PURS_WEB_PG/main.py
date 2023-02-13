@@ -1,6 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 from hashlib import sha256
+
+
+import MQTT
+MQTT.main()
+
 
 app = Flask(__name__)
 app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
@@ -13,18 +18,57 @@ app.config['MYSQL_DB'] = 'query1'
 mysql = MySQL(app)
 #db
 
+manufacturer = ('Plastika Trček', 'ESUN', 'PolyMaker', 'Creality', 'Prusa', 'ColorFabb')
+colour = ('Crna', 'Bijela', 'Siva', 'Plava', 'Crvena', 'Zelena', 'Žuta')
+material = ('PLA', 'PETG', 'ABS', 'ASA', 'TPU', 'TPE', 'PA-12', 'PC', 'PC-CF', 'HIPS')
+promjer = ('1.75', '2.85')
+
+def parsingFun(substring):
+    print("User: " + substring[0])
+    print("New ili edit filament: " + substring[1])
+    print("Filament data: " + substring[2])
+    print("Masa filamenta: " + substring[3])
+    sub = substring[2]
+    print("len of substring2: " + str(len(sub)))
+    data = []
+
+    data = [sub[i:i+2] for i in range(0, len(sub), 2)]
+    print([sub[i:i+2] for i in range(0, len(sub), 2)])
+
+    print("Proizvodjac: " + manufacturer[int(data[0])])
+    print("Boja: " + colour[int(data[1])])
+    print("Materijal: " + material[int(data[2])])
+    print("Promjer: " + promjer[int(data[3])])
+    print("Masa: " + substring[3])
+
+    if substring[1] == '#n': 
+        with app.app_context():
+            query = f"REPLACE INTO filament(proizvođač, boja, materijal, promjer, masa, datum_vrijeme_upisa) VALUES ('{manufacturer[int(data[0])]}', '{colour[int(data[1])]}', '{material[int(data[2])]}', '{promjer[int(data[3])]}', '{substring[3]}', NOW())"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query)
+            mysql.connection.commit()
+    elif substring[1] == '#e':
+            query = f"UPDATE filament SET masa = '{substring[3]}' WHERE proizvođač = '{manufacturer[int(data[0])]}', boja = '{colour[int(data[1])]}', materijal = '{material[int(data[2])]}', promjer = '{promjer[int(data[3])]}'"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query)
+            mysql.connection.commit()
+
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        # Izbacivanje iz sessiona nakon gašenja stranice/logout-a
+        for key in list(session.keys()):
+            session.pop(key)
         return render_template('login.html')
     elif request.method == 'POST':
         email = request.form.get('email')
-        password = request.form.get('password')
-        hexpass = sha256(password.encode()).hexdigest()
-        print(hexpass)
+        password = sha256(request.form.get('password').encode()).hexdigest()
+        print(password)
         # ADD uvijete koji actually provjeravaju db
-        query = f"SELECT titula FROM korisnik WHERE email = '{email}' AND password = HEX(password) = '{password}'"
+        query = f"SELECT titula FROM korisnik WHERE email = '{email}' AND HEX(password) = '{password}'"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         korisnik = cursor.fetchall()
@@ -51,15 +95,16 @@ def pocetna():
         #db
         headings = ("Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
 
+        headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
+
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         filament = cursor.fetchall()
         print(filament)
-        #return f'Filamenti: {filament}', 200
         #db
-        return render_template('index.html', filament=filament)
-        #return render_template('index.html')
+        return render_template('index.html', headings=headings, filament=filament)
+        
     return redirect(url_for('login')), 303
 
 @app.route('/admin', methods=['GET'])
@@ -67,8 +112,17 @@ def pocetna_admin():
     print(session)
 
     if 'titula' in session:
-        return render_template('pocetna_admin.html')
+        #db
+        headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
 
+        query = f"SELECT * FROM filament"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        filament = cursor.fetchall()
+        print(filament)
+        #db
+        return render_template('pocetna_admin.html', headings=headings, filament=filament)
+        
     return redirect(url_for('login')), 303
 
 @app.route('/new-user', methods=['GET','POST'])

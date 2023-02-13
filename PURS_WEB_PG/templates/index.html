@@ -17,20 +17,23 @@
     </div>
   </div>
   
-  <table>
-    <tr>
-      {% for header in headings%}
-      <th>{{header}}</th>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        {% for header in headings%}
+        <th>{{header}}</th>
+        {%endfor%}
+      </tr>
+    </thead>
+    <tbody>
+      {%for row in filament%}
+        <tr>
+        {%for cell in row%}
+          <td>{{cell}}</td>
+        {%endfor%}
+        </tr>
       {%endfor%}
-    </tr>
-    {%for row in filament%}
-    <tr>
-      {%for cell in row%}
-      <td>{{cell}}</td>
-      {%endfor%}
-    </tr>
-    {%endfor%}
-
+    </tbody>
   </table>
 
 

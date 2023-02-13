@@ -19,7 +19,7 @@ datum_vrijeme_upisa datetime
 CREATE TABLE korisnik(
 id int primary key auto_increment,
 email varchar(50),
-password BINARY(50),
+password BINARY(32),
 titula char(50)
 ); 
 
@@ -36,4 +36,6 @@ INSERT INTO korisnik(email, password, titula) VALUES
 SELECT email,HEX(password) from korisnik;
 SELECT password from korisnik;
 SELECT * from korisnik;
-SELECT titula FROM korisnik WHERE email = 'marko@gmail.com' AND password = HEX(password) = UNHEX(SHA2('marko', 256));
+SELECT * from filament;
+SELECT titula FROM korisnik WHERE email = 'admin@gmail.com' AND HEX(password) = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+-- SELECT titula FROM korisnik WHERE email = 'marko@gmail.com' AND password = HEX(password) = UNHEX(SHA2('bruno', 256));

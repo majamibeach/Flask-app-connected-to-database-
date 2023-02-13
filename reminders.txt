@@ -2,6 +2,8 @@
 - dodati si komentare na teže dijelove koda
 - add kljajića na git
 - (DONE) /new-filament css primjeni
-- display tablice - update - filter
+- (DONE) display tablice - update
 - flashanje error poruka za krivi unos emaila,...
-- is
+- filter/sort by
+- popravit errore i izbacivat poruke
+
