@@ -44,14 +44,14 @@ label{
 input{
     margin: 0.3rem;
 }
-input[type="email"], [type="password"], [type="text"]{
+input[type="email"], [type="password"], [type="text"], [type="number"]{
     border: 0.1rem solid rgb(144, 132, 128);
     padding: 0.5rem;
     border-radius: 0.6rem;
     width: 12rem;
     transition: box-shadow 0.5s;
 }
-input[type="email"]:focus, [type="password"]:focus, [type="text"]:focus{
+input[type="email"]:focus, [type="password"]:focus, [type="text"]:focus, [type="number"]:focus{
     box-shadow: 0 0 0 0.15rem rgba(76, 127, 131, 0.25);
     border: 0.1rem solid rgb(24, 117, 255, 0.25);
     outline: 0;

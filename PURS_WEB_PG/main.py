@@ -31,57 +31,51 @@ def login():
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         korisnik = cursor.fetchall()
-        print(korisnik)
         
         if korisnik:
             session['titula'] = korisnik[0][0]
-            print(korisnik[0][0])
+
             if (korisnik[0][0] == "admin"):
-                print("U admin if")
                 return redirect(url_for('pocetna_admin')), 303
+            
             elif (korisnik[0][0] == "user"):
-                print("U user if")
                 return redirect(url_for('pocetna')), 303
+       
         else:
             return render_template('login.html', error='Uneseni su krivi korisnički podaci')
 
 @app.route('/', methods=['GET'])
 def pocetna():
-    #print(session)
 
     if 'titula' in session:
-        #db
+        
         headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         filament = cursor.fetchall()
-        print(filament)
-        #db
+        
         return render_template('index.html', headings=headings, filament=filament)
         
     return redirect(url_for('login')), 303
 
 @app.route('/admin', methods=['GET'])
 def pocetna_admin():
-    print(session)
 
     if 'titula' in session:
-        #db
+        
         headings = ("ID","Proizvođač","Boja", "Materijal","Promjer[mm]","Masa","Datum unosa")
         query = f"SELECT * FROM filament"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         filament = cursor.fetchall()
-        print(filament)
-        #db
+        
         return render_template('pocetna_admin.html', headings=headings, filament=filament)
         
     return redirect(url_for('login')), 303
 
 @app.route('/new-user', methods=['GET','POST'])
 def new_user():
-    print(session)
 
     if request.method == 'GET':
         return render_template('new_user.html')
@@ -95,9 +89,9 @@ def new_user():
         mysql.connection.commit()
 
         #db
-    # Provjera da li mail postoji, ako ne, dozvoli stvaranje
-    # novog korisnika
-    # if email not in db.... uzmi ove podatke i storeaj ih u db
+        # Provjera da li mail postoji, ako ne, dozvoli stvaranje
+        # novog korisnika
+        # if email not in db.... uzmi ove podatke i storeaj ih u db
         return redirect(url_for('pocetna_admin')), 303
 
     return redirect(url_for('new_user.html')), 303
@@ -105,7 +99,6 @@ def new_user():
 
 @app.route('/new-filament', methods=['GET','POST'])
 def new_filament():
-    print(session)
 
     if request.method == 'GET':
         return render_template('new_filament.html')
@@ -120,9 +113,6 @@ def new_filament():
         cursor.execute(query)
         mysql.connection.commit()
         
-    # Provjera da li mail postoji, ako ne, dozvoli stvaranje
-    # novog korisnika
-    # if email not in db.... uzmi ove podatke i storeaj ih u db
         return redirect(url_for('pocetna_admin')), 303
 
     return redirect(url_for('new_filament.html')), 303
@@ -136,7 +126,6 @@ def sortby_id():
     cursor = mysql.connection.cursor()
     cursor.execute(query)
     filament = cursor.fetchall()
-    print(filament)
 
     if (session['titula'] == "admin"):
         return render_template('pocetna_admin.html', headings=headings, filament=filament)
@@ -152,7 +141,6 @@ def sortby_proizvodac():
     cursor = mysql.connection.cursor()
     cursor.execute(query)
     filament = cursor.fetchall()
-    print(filament)
   
     if (session['titula'] == "admin"):
         return render_template('pocetna_admin.html', headings=headings, filament=filament)
@@ -229,7 +217,6 @@ def sortby_datum():
         return render_template('pocetna_admin.html', headings=headings, filament=filament)
 
     return render_template('index.html', headings=headings, filament=filament)
-    
 
 if __name__ == '__main__':
     app.run()

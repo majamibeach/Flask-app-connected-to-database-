@@ -12,3 +12,13 @@
       {% endif %}
 
       OVAJ DIO KODA SVUGJE U HTML U PROJMJERNIT IL STA VEC???
+
+
+tesija:
+pogledaj: https://www.youtube.com/watch?v=dam0GPOAvVI&t=833s
+ 5:44 negdje prica o tom __init__.py i skini taj dirr s njegovog gita pa da vidis sta je unutra.
+ mislim da bi se trebala dodat komunikacija sa MQTT i sa bazom unutar __init__.py pa 
+ u main.py imat sam naredbu:
+ 
+ from . import db   # means from __init__.py import db
+ i pokrenut app...... nezz jel ti sta znaci ovo i dal ima smisla 
