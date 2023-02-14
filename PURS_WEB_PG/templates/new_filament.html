@@ -20,13 +20,14 @@
     <form action="/new-filament" method="post">
       <p>Unos novog filamenta</p>
       <label for="proizvodjac">Proizvođač:</label><br>
-      <input type="text" placeholder="Unesi proizvođača" name="proizvodjac"/><br>
+      <input type="text" placeholder="Unesi proizvođača" name="proizvodjac" required/><br>
       <label for="boja">Boja:</label><br>
-      <input type="text" placeholder="Unesi boju" name="boja"/><br>
+      <input type="text" placeholder="Unesi boju" name="boja" required/><br>
       <label for="materijal">Materijal:</label><br>
-      <input type="text" placeholder="Unesi materijal" name="materijal"/><br>
+      <input type="text" placeholder="Unesi materijal" name="materijal" required/><br>
       <label for="promjer">Promjer:</label><br>
-      <input type="text" placeholder="Unesi promjer" name="promjer"/><br>
+      <input type="number" placeholder="Unesi promjer" name="promjer" step="0.01" min="0.1" max="9.99"
+      title="Lozinka mora sadržavati po barem jedno veliko i malo slovo, te mora imati najmanje 6 znakova" required/><br>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}

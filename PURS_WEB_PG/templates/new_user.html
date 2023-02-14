@@ -9,6 +9,7 @@
   </head>
   
   <body>
+    <!--NAVIGACIJSKI BAR NA VRHU-->
     <div class="topnav">
       <a class="active" href="/admin">Stanje</a>
       <a href="/new-user">Unos novog korisnika</a>
@@ -17,15 +18,16 @@
         <a href="/login">Odjava</a>
       </div>
     </div>
-
+    <!--CONTEINER TIPA FORM KOJI SLUZI ZA UNOS PODATAKA-->
     <form action="/new-user" method="post" class="unk_obrazac">
       <p>Unos novog korisnika</p>
       <label for="email">Email adresa:</label>
-      <input type="email" placeholder="Email adresa" name="email"/>
+      <input type="email" placeholder="Email adresa" name="email" required/>
       <label for="password">Lozinka:</label>
-      <input type="password" placeholder="Lozinka" name="password"/>
+      <input type="password" placeholder="Lozinka" name="password" id="password" pattern="(?=.*[a-z])(?=.*[A-Z]).{6,}"
+      title="Lozinka mora sadržavati po barem jedno veliko i malo slovo, te mora imati najmanje 6 znakova">
       <label for="password2">Potvrdi lozinku:</label>
-      <input type="password" placeholder="Potvrdi lozinku" name="password2"/>
+      <input type="password" placeholder="Potvrdi lozinku" name="password2" id="password2"/>
       {% if error %}
         <p class="error-message">{{error}}</p>
       {% endif %}

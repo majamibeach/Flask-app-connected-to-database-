@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <!--NAVIGACIJSKI BAR NA VRHU-->
   <div class="topnav">
     <a class="active" href="/admin">Stanje</a>
     <a href="/new-user">Unos novog korisnika</a>
@@ -17,14 +18,20 @@
       <a href="/login">Odjava</a>
     </div>
   </div>
+  <!--TABLICA STANJA-->
   <table class="styled-table">
     <thead>
       <tr>
-        {% for header in headings %}
-        <th>{{header}}</th>
-        {%endfor%}
+        <th><a href="/sortby-ID">ID</a></th>
+        <th><a href="/sortby-proizvodac">Proizvođač</a></th>
+        <th><a href="/sortby-boja">Boja</a></th>
+        <th><a href="/sortby-materijal">Materijal</a></th>
+        <th><a href="/sortby-promjer">Promjer [mm]</a></th>
+        <th><a href="/sortby-masa">Masa [g]</a></th>
+        <th><a href="/sortby-datum">Datum unosa</a></th>
       </tr>
     </thead>
+    <!--DINAMIČKO PRIKAZIVANJE TIJELA TABLICE-->
     <tbody>
       {%for row in filament%}
         <tr>
